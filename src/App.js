@@ -1,23 +1,32 @@
-import logo from './logo.svg';
-import './App.css';
+import axios from "axios";
+import { useState } from "react";
+import "./App.css";
 
 function App() {
+  const [data, setData] = useState();
+  const API_KEY =
+    "MjY0MTBfZTQ4MGFhMDIyODU5ZWMzNzlhNDE5YWMzNTk5NDg2YmUyZTRjOTQwOV8xNjYyNjU3NTAy";
+  function getReq() {
+    axios
+      .get(`https://asli-fun-fact-api.herokuapp.com/ `)
+      .then((res) => {
+        setData(res.data.data.fact);
+      })
+      .catch((err) => console.error(err));
+  }
+  const example = "Your fact"
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+      <div className="wrapper">
+        <p>{data || example}</p>
+        <button
+          onClick={() => {
+            getReq();
+          }}
         >
-          Learn React
-        </a>
-      </header>
+          Funny fact
+        </button>
+      </div>
     </div>
   );
 }
